@@ -1,3 +1,5 @@
+const { pipelinePrimaryTopicReference } = require("@babel/types")
+
 const player = {
   songs: [
     {
@@ -49,26 +51,56 @@ const player = {
   ],
   playSong(song) {
     let duration=convertDuriation(song)
-   return console.log("Playing "+song.title+" from "+song.album+" by "+song.artist+" | "+duration+".")
+   return "Playing "+song.title+" from "+song.album+" by "+song.artist+" | "+duration+"."
   },
 }
+
 function convertDuriation(song){
   let seconds=song.duration
   let minutes=Math.floor(seconds/60)
    if(seconds-(minutes*60)<10) return "0"+minutes+":"+"0"+(seconds-(minutes*60))
    else  return "0"+minutes+":"+(seconds-(minutes*60))
  }
+ //checks if the selected title exists in the songs array
+ function exist(id){
+for (let i=0; i<player.songs.length;i++){
+   if(player.songs[i].id==id) return i;
+}
+return -1
+ }
 function playSong(id) {
-  for(let i=0; i<player.songs.length;i++){
-    if (player.songs[i].id===id)
-    return player.playSong(player.songs[i])
-  }
+    if(exist(id)!==-1)
+        console.log(player.playSong(player.songs[exist(id)]))
+    else  throw "ID not exist"
 }
-playSong(5)
-playSong(10)
+  
+playSong(7)
+
 function removeSong(id) {
-  // your code here
+//   try{
+//     console.log(exist(id))
+// if(exist(id)){
+//   // delete player.playlists.
+//   for(let i=0;i<player.playlists.length;i++){
+//     for(let j=0;j<player.playlists.songs.length;j++){
+//       if(player.playlists[i].songs[j]==id){
+//         delete player.playlists[i].songs[j]
+//       } 
+//     }
+//   }
+//   for (let i=0; i<player.songs.length;i++){
+//     if(player.songs[i].id==id){ delete player.songs[i]
+//     }
+//   }
+// }
+// else throw error
+// }
+// catch{
+//    return "no song match the ID"
+// }
 }
+
+// 
 
 function addSong(title, album, artist, duration, id) {
   // your code here
