@@ -64,6 +64,7 @@ function convertDuriation(song){
  //checks if the selected title exists in the songs array and return its place in the array
  function exist(id){
 for (let i=0; i<player.songs.length;i++){
+  console.log(player.songs[i].id==id)
    if(player.songs[i].id==id) return i;
 }
 return -1
@@ -79,12 +80,10 @@ playSong(7)
 function removeSong(id) {
     console.log(exist(id))
 if(exist(id)!==-1){
-  // delete player.playlists.
   for(let i=0;i<player.playlists.length;i++){
     for(let j=0;j<player.playlists[i].songs.length;j++){
       if(player.playlists[i].songs[j]==id){
         player.playlists[i].songs.splice(player.playlists[i].songs.indexOf(id),1)
-        // delete player.playlists[i].songs[j]
       } 
     }
   }
@@ -95,14 +94,30 @@ if(exist(id)!==-1){
 }
 
 
- console.log(player.playlists[0].songs)
-   removeSong(7)
- console.log(player.playlists[0].songs)
- console.log(player.songs)
 function addSong(title, album, artist, duration, id) {
-  // your code here
-}
-
+  if(id==undefined){
+    id=Math.floor(Math.random()*player.songs.length)+1
+    while((exist(id))!==-1)
+    id=Math.floor(Math.random()*player.songs.length)+1
+  }
+   if((exist(id))===-1){
+    let format=duration.split(":")
+    let minutes=parseInt(format.slice(0,1))
+    let seconds=parseInt(format.slice(1))
+    duration=(minutes*60)+seconds
+    let song={
+      "id":id,
+      "title":title,
+      "album":album,
+      "artist":artist,
+      "duration": duration
+    }
+    player.songs.push(song) 
+    return player.songs[player.songs.length-1].id
+  }
+    else throw "ID is already taken"
+  }
+  console.log(addSong("bring","bla","kiss","04:27",9))
 function removePlaylist(id) {
   // your code here
 }
