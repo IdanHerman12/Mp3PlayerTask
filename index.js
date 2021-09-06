@@ -88,14 +88,13 @@ if(exist(id)!==-1){
       } 
     }
   }
-  for (let i=0; i<player.songs.length;i++){
-    if(player.songs[i]["id"]==id){  player.songs.splice(exist(id),1)
-    }
+   player.songs.splice(exist(id),1)
      
   }
+  else throw "no song match the ID"
 }
-else throw "no song match the ID"
-}
+
+
  console.log(player.playlists[0].songs)
    removeSong(7)
  console.log(player.playlists[0].songs)
