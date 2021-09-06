@@ -51,7 +51,11 @@ const player = {
     console.log(/* your code here */)
   },
 }
-
+function convertDuriation(song){
+  let seconds=song.duration
+  let minutes=Math.floor(seconds/60)
+  return minutes+":"+((seconds-minutes*60))
+}
 function playSong(id) {
   // your code here
 }
