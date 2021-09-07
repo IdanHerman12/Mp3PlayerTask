@@ -1,4 +1,4 @@
-const { pipelinePrimaryTopicReference } = require("@babel/types")
+const { pipelinePrimaryTopicReference, existsTypeAnnotation } = require("@babel/types")
 
 const player = {
   songs: [
@@ -48,13 +48,14 @@ const player = {
   playlists: [
     { id: 1, name: 'Metal', songs: [1, 7, 4] },
     { id: 5, name: 'Israeli', songs: [4, 5] },
+    {id: 3, name: 'Maroko', songs: [4]},
   ],
   playSong(song) {
     let duration=convertDuriation(song)
    return "Playing "+song.title+" from "+song.album+" by "+song.artist+" | "+duration+"."
   },
 }
-
+//---------------------helpful functions start--------------------------
 function convertDuriation(song){
   let seconds=song.duration
   let minutes=Math.floor(seconds/60)
@@ -72,16 +73,18 @@ return -1
    let id=Math.floor(Math.random()*array.length)+2;
    return id
  }
+//---------------------helpful functions ends--------------------------
+
 function playSong(id) {
-    if(exist(id,player.songs)!==-1)
-        console.log(player.playSong(player.songs[exist(id,player.songs)]))
-    else  throw "ID not exist"
+    if(exist(id,player.songs)!==-1){
+       console.log(player.playSong(player.songs[exist(id,player.songs)]))
+      }
+      else throw "ID not exist"
 }
   
-playSong(7)
+
 
 function removeSong(id) {
-    console.log(exist(id,player.songs))
 if(exist(id,player.songs)!==-1){
   for(let i=0;i<player.playlists.length;i++){
     for(let j=0;j<player.playlists[i].songs.length;j++){
@@ -120,7 +123,7 @@ function addSong(title, album, artist, duration, id) {
   }
     else throw "ID is already taken"
   }
-  console.log(addSong("bring","bla","kiss","04:27",9))
+
 
   
 function removePlaylist(id) {
@@ -156,12 +159,43 @@ function createPlaylist(name, id) {
 
 
 function playPlaylist(id) {
-  // your code here
+  if(exist(id,player.playlists)!==-1){
+    let songArr=exist(id,player.playlists)
+    for(let i=0;i<player.playlists[songArr].songs.length;i++){
+    playSong(player.playlists[songArr].songs[i])
+     }
+  }else throw "ID dosent exist"
 }
 
+//if a song exists in the playlist remove it,if it was the only song delete the playlist,if it dosent exist add it to the end of the playlist
 function editPlaylist(playlistId, songId) {
-  // your code here
+  if(exist(playlistId,player.playlists)!==-1){
+    if(exist(songId,player.songs)!==-1){
+      console.log(exist(songId,player.songs))
+      let playlistPlaceInArry=(exist(playlistId,player.playlists))
+      console.log(player.playlists[playlistPlaceInArry].songs)
+      let flag=false;
+      let songsArr=player.playlists[playlistPlaceInArry].songs
+      
+      for(let i=0;i<songsArr.length;i++){
+        console.log(songsArr[i])
+          if(songsArr[i]===songId){
+            flag=true;
+               player.playlists[playlistPlaceInArry].songs.splice(i,1);
+          }
+      }
+      if (flag===false)player.playlists[playlistPlaceInArry].songs.push(player.songs[exist(songId,player.songs)].id)  
+      else {
+       if(player.playlists[playlistPlaceInArry].songs.length===0)removePlaylist(player.playlists[playlistPlaceInArry].id)
+      }
+    }
+    else throw "song ID not exist";
+  }
+  else throw "playlist ID not exist"
 }
+ editPlaylist(3,4)
+ console.log(player.playlists)
+
 
 function playlistDuration(id) {
   // your code here
