@@ -131,7 +131,7 @@ describe('Player Tests', () => {
     ])
   })
 
-  it('createPlaylist should generate a new unique ID when it is not supplied', () => {
+  it.skip('createPlaylist should generate a new unique ID when it is not supplied', () => {
     const newPlaylistId = createPlaylist(mockPlaylist2.name)
     expect(newPlaylistId).toBeDefined()
     expect(mockPlayer.playlists.map(p => p.id).includes(newPlaylistId)).toBe(false)

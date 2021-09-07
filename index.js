@@ -68,6 +68,10 @@ for (let i=0; i<array.length;i++){
 }
 return -1
  }
+ function randomID(array){
+   let id=Math.floor(Math.random()*array.length)+2;
+   return id
+ }
 function playSong(id) {
     if(exist(id,player.songs)!==-1)
         console.log(player.playSong(player.songs[exist(id,player.songs)]))
@@ -132,27 +136,24 @@ else throw "playlist ID dosen't exist";
 
 
 function createPlaylist(name, id) {
-  if(id==undefined){
-    id=Math.floor(Math.random()*player.playlists.length)+2;
-    console.log(id)
-    console.log(exist(id,player.playlists))
+  if(id==undefined) {
+    id=randomID(player.playlists)
     while((exist(id,player.playlists))!==-1){
-       id=Math.floor(Math.random()*player.playlists.length)+2;
+       id=randomID(player.playlists)
       }
-    console.log(id)
   }
-  console.log(exist(id,player.playlists))
     if(exist(id,player.playlists)===-1){
      let playlist={
        "id":id,
        "name":name,
        "songs":[]
      }
-     console.log(playlist)
      player.playlists.push(playlist);
+     return player.playlists[player.playlists.length-1].id;
   }
   else throw "ID of playlist exists";
 }
+
 
 function playPlaylist(id) {
   // your code here
