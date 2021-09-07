@@ -61,24 +61,24 @@ function convertDuriation(song){
    if(seconds-(minutes*60)<10) return "0"+minutes+":"+"0"+(seconds-(minutes*60))
    else  return "0"+minutes+":"+(seconds-(minutes*60))
  }
- //checks if the selected title exists in the songs array and return its place in the array
- function exist(id){
-for (let i=0; i<player.songs.length;i++){
-   if(player.songs[i].id==id) return i;
+ //checks if the selected ID exists in the array and return its place in the array
+ function exist(id,array){
+for (let i=0; i<array.length;i++){
+   if(array[i].id==id) return i;
 }
 return -1
  }
 function playSong(id) {
-    if(exist(id)!==-1)
-        console.log(player.playSong(player.songs[exist(id)]))
+    if(exist(id,player.songs)!==-1)
+        console.log(player.playSong(player.songs[exist(id,player.songs)]))
     else  throw "ID not exist"
 }
   
 playSong(7)
 
 function removeSong(id) {
-    console.log(exist(id))
-if(exist(id)!==-1){
+    console.log(exist(id,player.songs))
+if(exist(id,player.songs)!==-1){
   for(let i=0;i<player.playlists.length;i++){
     for(let j=0;j<player.playlists[i].songs.length;j++){
       if(player.playlists[i].songs[j]==id){
@@ -86,7 +86,7 @@ if(exist(id)!==-1){
       } 
     }
   }
-   player.songs.splice(exist(id),1)
+   player.songs.splice(exist(id,player.songs),1)
      
   }
   else throw "no song match the ID"
@@ -96,10 +96,10 @@ if(exist(id)!==-1){
 function addSong(title, album, artist, duration, id) {
   if(id==undefined){
     id=Math.floor(Math.random()*player.songs.length)+1
-    while((exist(id))!==-1)
+    while((exist(id,player.songs))!==-1)
     id=Math.floor(Math.random()*player.songs.length)+1
   }
-   if((exist(id))===-1){
+   if((exist(id,player.songs))===-1){
     let format=duration.split(":")
     let minutes=parseInt(format.slice(0,1))
     let seconds=parseInt(format.slice(1))
@@ -120,20 +120,20 @@ function addSong(title, album, artist, duration, id) {
 
   
 function removePlaylist(id) {
-  let exist=false;
+  if(exist(id,player.playlists)!==-1){
   for(let i=0;i<player.playlists.length;i++){
        if(player.playlists[i].id===id){
-         exist=true;
-         player.playlists.splice(i,1);
+         player.playlists.splice(exist(id,player.playlists),1);
   }
 }
-if(exist===false) throw "playlist ID dosen't exist";
+}
+else throw "playlist ID dosen't exist";
 }
 
 
 
 function createPlaylist(name, id) {
-  // your code here
+  
 }
 
 function playPlaylist(id) {
