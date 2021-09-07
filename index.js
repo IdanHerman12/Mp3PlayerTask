@@ -62,6 +62,13 @@ function convertDuriation(song){
    if(seconds-(minutes*60)<10) return "0"+minutes+":"+"0"+(seconds-(minutes*60))
    else  return "0"+minutes+":"+(seconds-(minutes*60))
  }
+ function reverseConvertDuration(duration){
+  let format=duration.split(":");
+  let minutes=parseInt(format.slice(0,1));
+  let seconds=parseInt(format.slice(1));
+  duration=(minutes*60)+seconds;
+  return duration;
+ }
  //checks if the selected ID exists in the array and return its place in the array
  function exist(id,array){
 for (let i=0; i<array.length;i++){
@@ -248,7 +255,27 @@ results.songs.sort(function(a,b){
 return results;
 }
 function searchByDuration(duration) {
-  // your code here
+  let seconds=reverseConvertDuration(duration);
+let closestSong,closestPlaylist;
+closestSong=player.songs[0];
+let closestSongDuration=player.songs[0].duration;
+
+for(let i=0;i<player.songs.length;i++){
+if(Math.abs(closestSongDuration-seconds)>Math.abs(player.songs[i].duration-seconds)){
+closestSong=player.songs[i];
+closestSongDuration=closestSong.duration;
+}
+}
+closestPlaylist=player.playlists[0];
+let closestPlaylistDuration=playlistDuration(player.playlists[0].id);
+for(let i=0;i<player.playlists.length;i++){
+ if(Math.abs(closestPlaylistDuration-seconds)<Math.abs((playlistDuration(player.playlists[i].id))-seconds)){
+    closestPlaylist=player.playlists[i];
+    closestPlaylistDuration=playlistDuration(player.playlists[i].id);
+ }
+}
+if((Math.abs(closestSongDuration-seconds))<Math.abs((closestPlaylistDuration-seconds)))return closestSong;
+return closestPlaylist;
 }
 
 module.exports = {
