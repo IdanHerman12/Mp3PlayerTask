@@ -64,7 +64,6 @@ function convertDuriation(song){
  //checks if the selected title exists in the songs array and return its place in the array
  function exist(id){
 for (let i=0; i<player.songs.length;i++){
-  console.log(player.songs[i].id==id)
    if(player.songs[i].id==id) return i;
 }
 return -1
@@ -118,9 +117,20 @@ function addSong(title, album, artist, duration, id) {
     else throw "ID is already taken"
   }
   console.log(addSong("bring","bla","kiss","04:27",9))
+
+  
 function removePlaylist(id) {
-  // your code here
+  let exist=false;
+  for(let i=0;i<player.playlists.length;i++){
+       if(player.playlists[i].id===id){
+         exist=true;
+         player.playlists.splice(i,1);
+  }
 }
+if(exist===false) throw "playlist ID dosen't exist";
+}
+
+
 
 function createPlaylist(name, id) {
   // your code here
