@@ -73,6 +73,9 @@ return -1
    let id=Math.floor(Math.random()*array.length)+2;
    return id
  }
+ function songFromArray(id){
+   return player.songs[exist(id,player.songs)].duration
+   }
 //---------------------helpful functions ends--------------------------
 
 function playSong(id) {
@@ -193,13 +196,20 @@ function editPlaylist(playlistId, songId) {
   }
   else throw "playlist ID not exist"
 }
- editPlaylist(3,4)
- console.log(player.playlists)
-
+ 
 
 function playlistDuration(id) {
-  // your code here
+ if(exist(id,player.playlists)!==-1){
+   let placeInArry=exist(id,player.playlists)
+   let sumDuration=0;
+   for(let i=0;i<player.playlists[placeInArry].songs.length;i++){
+     sumDuration+=songFromArray(player.playlists[placeInArry].songs[i])
+   }
+   return sumDuration;
+ }
+ else throw "playlist ID not exist"
 }
+
 
 function searchByQuery(query) {
   // your code here
