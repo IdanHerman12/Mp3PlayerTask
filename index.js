@@ -1,4 +1,4 @@
-const { pipelinePrimaryTopicReference, existsTypeAnnotation } = require("@babel/types")
+const { pipelinePrimaryTopicReference, existsTypeAnnotation, assertNewExpression } = require("@babel/types")
 
 const player = {
   songs: [
@@ -74,14 +74,10 @@ return -1
     for(let i in array){
        if(max<array[i].id) max=array[i].id;
     }
-    return max+1
+    return max+1;
  }
- console.log(randomID(player.playlists))
  function songFromArray(id){
    return player.songs[exist(id,player.songs)].duration
-   }
-   function serchInPlayer(array){
-
    }
 //---------------------helpful functions ends--------------------------
 
@@ -218,13 +214,39 @@ function playlistDuration(id) {
 
 
 function searchByQuery(query) {
+  //a variable for ignoring the case sensitive
+  const queryRegex=RegExp(`${query}`,'i')
+  console.log(queryRegex)
 let results={
   "songs":[],
-  "playlist":[]
+  "playlists":[]
+};
+for(i=0;i,i<player.songs.length;i++){
+  for(let key in player.songs[i]){
+    if(queryRegex.test(player.songs[i][key])){
+      results.songs.push(player.songs[i]);
+      break;
+    }
+  }
 }
-// if(player.songs.findIndex(query))
+for(i=0;i<player.playlists.length;i++){
+  for(let key in player.playlists[i]){
+    if(queryRegex.test(player.playlists[i][key])){
+      results.playlists.push(player.playlists[i]);
+      break;
+    }
+  }
 }
-searchByQuery("t")
+//function to arrange the objects in the results.song at alphabetic order
+results.songs.sort(function(a,b){
+  let x= a.title.toLowerCase();
+  let y= b.title.toLowerCase();
+  if(x<y)return -1;
+  if(x>y)return 1;
+  return 0;
+});
+return results;
+}
 function searchByDuration(duration) {
   // your code here
 }
