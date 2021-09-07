@@ -70,11 +70,18 @@ for (let i=0; i<array.length;i++){
 return -1
  }
  function randomID(array){
-   let id=Math.floor(Math.random()*array.length)+2;
-   return id
+   let max=array[0].id
+    for(let i in array){
+       if(max<array[i].id) max=array[i].id;
+    }
+    return max+1
  }
+ console.log(randomID(player.playlists))
  function songFromArray(id){
    return player.songs[exist(id,player.songs)].duration
+   }
+   function serchInPlayer(array){
+
    }
 //---------------------helpful functions ends--------------------------
 
@@ -170,7 +177,6 @@ function playPlaylist(id) {
   }else throw "ID dosent exist"
 }
 
-//if a song exists in the playlist remove it,if it was the only song delete the playlist,if it dosent exist add it to the end of the playlist
 function editPlaylist(playlistId, songId) {
   if(exist(playlistId,player.playlists)!==-1){
     if(exist(songId,player.songs)!==-1){
@@ -207,14 +213,18 @@ function playlistDuration(id) {
    }
    return sumDuration;
  }
- else throw "playlist ID not exist"
+ else throw "playlist ID not exist";
 }
 
 
 function searchByQuery(query) {
-  // your code here
+let results={
+  "songs":[],
+  "playlist":[]
 }
-
+// if(player.songs.findIndex(query))
+}
+searchByQuery("t")
 function searchByDuration(duration) {
   // your code here
 }
