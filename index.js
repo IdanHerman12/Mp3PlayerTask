@@ -131,9 +131,27 @@ else throw "playlist ID dosen't exist";
 }
 
 
-
 function createPlaylist(name, id) {
-  
+  if(id==undefined){
+    id=Math.floor(Math.random()*player.playlists.length)+2;
+    console.log(id)
+    console.log(exist(id,player.playlists))
+    while((exist(id,player.playlists))!==-1){
+       id=Math.floor(Math.random()*player.playlists.length)+2;
+      }
+    console.log(id)
+  }
+  console.log(exist(id,player.playlists))
+    if(exist(id,player.playlists)===-1){
+     let playlist={
+       "id":id,
+       "name":name,
+       "songs":[]
+     }
+     console.log(playlist)
+     player.playlists.push(playlist);
+  }
+  else throw "ID of playlist exists";
 }
 
 function playPlaylist(id) {
