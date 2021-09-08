@@ -76,7 +76,7 @@ for (let i=0; i<array.length;i++){
 }
 return -1
  }
- 
+
  function randomID(array){
    let newId=array[0].id
    console.log(newId)
@@ -121,9 +121,7 @@ if(exist(id,player.songs)!==-1){
 
 function addSong(title, album, artist, duration, id) {
   if(id==undefined){
-    id=Math.floor(Math.random()*player.songs.length)+1
-    while((exist(id,player.songs))!==-1)
-    id=Math.floor(Math.random()*player.songs.length)+1
+    id=randomID(palyer.songs)
   }
    if((exist(id,player.songs))===-1){
     let format=duration.split(":")
@@ -160,9 +158,6 @@ else throw "playlist ID dosen't exist";
 function createPlaylist(name, id) {
   if(id==undefined) {
     id=randomID(player.playlists)
-    // while((exist(id,player.playlists))!==-1){
-    //    id=randomID(player.playlists)
-    //   }
   }
     if(exist(id,player.playlists)===-1){
      let playlist={
