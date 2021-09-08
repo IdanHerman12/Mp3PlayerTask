@@ -121,7 +121,7 @@ if(exist(id,player.songs)!==-1){
 
 function addSong(title, album, artist, duration, id) {
   if(id==undefined){
-    id=randomID(palyer.songs)
+    id=randomID(player.songs)
   }
    if((exist(id,player.songs))===-1){
     let format=duration.split(":")
