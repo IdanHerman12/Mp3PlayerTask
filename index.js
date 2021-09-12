@@ -141,7 +141,6 @@ function addSong(title, album, artist, duration, id) {
     else throw "ID is already taken"
   }
 
-
   
 function removePlaylist(id) {
   if(exist(id,player.playlists)!==-1){
